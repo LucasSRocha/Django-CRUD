@@ -20,7 +20,7 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ['category']
 
 
-class ShoeSerializer(serializers.ModelSerializer):
+class ShoeSerializer(serializers.HyperlinkedModelSerializer):
 
     def create(self, validated_data):
         categories = validated_data.pop('class_category')
@@ -45,23 +45,17 @@ class ShoeSerializer(serializers.ModelSerializer):
 
         instance.shoes_bought = validated_data.get('shoes_bought', instance.shoes_bought)
 
-        instance.class_category = validated_data.get('class_category', instance.class_category)
+        instance.shoe_brand = validated_data.get('shoe_brand', instance.shoe_brand)
 
         instance.save()
+
+        instance.class_category.set(validated_data.get('class_category', instance.class_category))
 
         return instance
 
     class Meta:
         model = Shoes
-
-        fields = [
-            'class_category',
-            'color',
-            'price',
-            'shoe_model',
-            'size',
-            'shoes_stock',
-        ]
+        fields = '__all__'
 
         required = [
             'price',
@@ -70,3 +64,4 @@ class ShoeSerializer(serializers.ModelSerializer):
             'size',
             'shoe_stock',
         ]
+        read_only_fields = ['id', ]

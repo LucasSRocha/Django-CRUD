@@ -19,5 +19,6 @@ from .views import ShoesApiView
 
 router = routers.DefaultRouter()
 
-router.register(r'category', CategoryApiView)
-router.register(r'shoes', ShoesApiView)
+router.register(r'category', CategoryApiView, basename='category')
+
+router.register(r'shoes', ShoesApiView, basename='shoes')
