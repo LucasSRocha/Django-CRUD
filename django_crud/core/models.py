@@ -30,7 +30,7 @@ class Shoes(models.Model):
 
     shoe_brand = models.CharField(max_length=254, blank=True)
 
-    class_category = models.ManyToManyField('Categories')
+    class_category = models.ManyToManyField('Categories', blank=True)
 
     @property
     def remaining_shoes(self):
