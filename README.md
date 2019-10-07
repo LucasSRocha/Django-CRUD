@@ -15,22 +15,17 @@ $ git clone https://github.com/LucasSRocha/Django-CRUD.git
 
 
 $ cd Django-CRUD
-
-
-# You can build the docker image and then start it (or do it all at once)
-
-
+```
+You can build the docker image and then start it (or do it all at once)
+```
 $ docker-compose build
 
 $ docker-compose up
-
-
+```
 or
-
-
+```
 $ docker-compose up --build
 ```
-
 #### You can access all images' bashes:
 
 - The project itself: ``` $ docker-compose exec web bash ```
@@ -38,10 +33,10 @@ $ docker-compose up --build
 
 - Postgres:  ``` $ docker-compose exec db bash ```
 
-
 ### Run tests
 ```
 $ cd Django-CRUD
+
 
 $ docker-compose run web python django_crud/manage.py test core
 ```
@@ -50,20 +45,20 @@ $ docker-compose run web python django_crud/manage.py test core
 
 ```
 $ docker-compose run web python django_crud/manage.py createsuperuser
+```
 
+With your username and password make a post request to ```/auth/login```
 
-With your username and password make a post request to '/auth/login'
-
-
+```
 $ curl -d "username=admin&password=admin" -X POST http://localhost:8000/auth/login/
 
 
 {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNTcwNDM1NjM5LCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSJ9.-mQHuiEELlGG6-6GdAjBbHHZo2yLlolE1rXnU_Cv0FE"}
-
+```
 
 Use the token value as your authorization header
 
-
+```
 $ curl -H "Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNTcwNDM1NjM5LCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSJ9.-mQHuiEELlGG6-6GdAjBbHHZo2yLlolE1rXnU_Cv0FE" -X GET http://localhost:8000/
 
 
@@ -79,9 +74,10 @@ $ curl -X GET http://localhost:8000/
 ```
 
 ### You can create a Category
-```
+
 By sending a POST request to '/category/' with the *category* data you can create new unique categories.
 
+```
 curl -H "Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNTcwNDM1NjM5LCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSJ9.-mQHuiEELlGG6-6GdAjBbHHZo2yLlolE1rXnU_Cv0FE" -d "category=Calçados" -X POST http://localhost:8000/category/
 
 
@@ -96,9 +92,9 @@ You also can:
 - put, patch, delete at ```/category/:id```
 
 ### For this project we're focusing on Shoes (Other models may be included later)
-```
+
 Shoes are defined by this atributes:
-```
+
 - price
 - size
 - color
@@ -128,21 +124,21 @@ You also can:
 - put, patch, delete at ```/shoes/:id```
 
 ### And for mass insert you can use /_resource_/csv_import
-```
-To get a list of the available resources make a GET request at '/'
 
+To get a list of the available resources make a GET request at ```/```
+
+```
 $ curl -H "Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNTcwNDM1NjM5LCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSJ9.-mQHuiEELlGG6-6GdAjBbHHZo2yLlolE1rXnU_Cv0FE" -X GET http://localhost:8000/
 
 
 {"category":"http://localhost:8000/category/","shoes":"http://localhost:8000/shoes/"}
+```
 To mass insert categories with a csv file you have to use the following column pattern at the link '/category/csv_import':
 
-*category*
+```*category*```
 
 To mass insert shoes with a csv file you have to use the following column pattern at the link '/shoes/csv_import':
 
-*price,discount,size,color,shoes_stock,shoes_bought,shoe_model,shoe_brand,class_category*
+```*price,discount,size,color,shoes_stock,shoes_bought,shoe_model,shoe_brand,class_category*```
 
 Doing so you'll be able to mass insert shoes and even calculate discounts if you wish so.
-
-```
